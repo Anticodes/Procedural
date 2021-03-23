@@ -4,7 +4,7 @@ class Player{
   
   Player(){
     pos = new PVector(0, 0);
-    speed = 0.001;
+    speed = 0.0001;
   }
   
   void update(){
@@ -13,7 +13,7 @@ class Player{
   }
   
   void move(){
-    pos.add(input.getJoypadDir().mult(speed));
+    pos.add(input.getJoypadDir().mult(frameTime*speed));
   }
   
   void render(){

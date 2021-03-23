@@ -1,4 +1,5 @@
 float resolution = 20;
+float frameTime;
 boolean debugMode = false;
 float scale, resx, resy;
 Input input;
@@ -6,10 +7,10 @@ Player player;
 World world;
 
 void setup(){
-  size(displayWidth, displayHeight);
+  fullScreen(P2D);
   orientation(LANDSCAPE);
   rectMode(CENTER);
-  frameRate(144);
+  noStroke();
   if(height > width){
     scale = width/resolution;
     resx = resolution;
@@ -22,10 +23,11 @@ void setup(){
   input = new Input();
   player = new Player();
   world = new World(player);
-  input.setJoypad(new PVector(4, resy - 4), scale*3);
+  input.setJoypad(new PVector(4, resy - 4), 3*scale);
 }
 
 void draw(){
+  frameTime = 1000f/frameRate;
   background(192, 64, 192);
   translate(width/2, height/2);
   translate(-player.pos.x*scale, -player.pos.y*scale);
