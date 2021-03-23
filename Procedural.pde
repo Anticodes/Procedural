@@ -9,7 +9,7 @@ void setup(){
   size(displayWidth, displayHeight);
   orientation(LANDSCAPE);
   rectMode(CENTER);
-  frameRate(60);
+  frameRate(144);
   if(height > width){
     scale = width/resolution;
     resx = resolution;

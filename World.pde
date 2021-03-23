@@ -22,10 +22,10 @@ class World{
     PVector chunkPos = pos.div(chunkSize);
     chunkPos.x = floor(chunkPos.x);
     chunkPos.y = floor(chunkPos.y);
-    /*if(chunkPos.x == lastCenterChunk.x && chunkPos.y == lastCenterChunk.y){
+    if(chunkPos.x == lastCenterChunk.x && chunkPos.y == lastCenterChunk.y){
       return;
     }
-    lastCenterChunk = chunkPos.copy();*/
+    lastCenterChunk = chunkPos.copy();
     chunks.clear();
     for(int i = -1; i < 2; i++){
       for(int j = -1; j < 2; j++){
