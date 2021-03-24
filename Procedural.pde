@@ -21,7 +21,7 @@ void setup(){
     resy = resolution;
     resx = width/scale;
   }
-  textSize(scale);
+  textSize(scale/2);
   input = new Input();
   player = new Player();
   world = new World(player);
