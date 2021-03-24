@@ -2,7 +2,6 @@ class Input{
   
   Joypad joypad;
   ArrayList<Button> buttons = new ArrayList<Button>();
-  PVector[] touches = new PVector[1];
   
   void setJoypad(PVector pos, float scale){
     joypad = new Joypad(pos, scale);
@@ -21,26 +20,22 @@ class Input{
   }
   
   void update(){
-    touches[0] = new PVector(mouseX, mouseY);
     joypad.render();
     for(Button button : buttons)
       button.render();
   }
   
   void mPress(){
-    touches[0] = new PVector(mouseX, mouseY);
     joypad.mPress();
     for(Button button : buttons)
       button.mPress();
   }
   
   void mDrag(){
-    touches[0] = new PVector(mouseX, mouseY);
     joypad.mDrag();
   }
   
   void mRel(){
-    touches[0] = new PVector(mouseX, mouseY);
     joypad.mRel();
     for(Button button : buttons)
       button.mRel();
@@ -59,6 +54,7 @@ class Input{
     float radius;
     PVector pos;
     PVector joypos;
+    PVector[] touches = new PVector[1];
     boolean joying = false;
     boolean isActive = true;
     int touchIndex = 0;
@@ -117,6 +113,7 @@ class Input{
     PVector pos;
     boolean isActive = true;
     boolean pressing = false;
+    PVector[] touches = new PVector[1];
     String text;
     
     Button(PVector pos, float radius, String text){
@@ -168,18 +165,6 @@ void touchMoved(){
   
 void touchEnded(){
   input.mRel();
-}
-
-void mousePressed(){
-  touchStarted();
-}
-
-void mouseDragged(){
-  touchMoved();
-}
-
-void mouseReleased(){
-  touchEnded();
 }
   
 void keyPressed(){
