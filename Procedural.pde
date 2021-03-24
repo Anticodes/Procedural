@@ -10,6 +10,7 @@ void setup(){
   fullScreen(P2D);
   orientation(LANDSCAPE);
   rectMode(CENTER);
+  textAlign(CENTER, CENTER);
   noStroke();
   if(height > width){
     scale = width/resolution;
@@ -20,10 +21,12 @@ void setup(){
     resy = resolution;
     resx = width/scale;
   }
+  textSize(scale);
   input = new Input();
   player = new Player();
   world = new World(player);
   input.setJoypad(new PVector(4, resy - 4), 3*scale);
+  input.addButton(new PVector(resx - 4, resy - 4), 3*scale, "Mine");
 }
 
 void draw(){
