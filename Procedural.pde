@@ -31,7 +31,6 @@ void setup(){
 
 void draw(){
   frameTime = 1000f/frameRate;
-  background(192, 64, 192);
   translate(width/2, height/2);
   translate(-player.pos.x*scale, -player.pos.y*scale);
   world.update();
@@ -39,5 +38,5 @@ void draw(){
   player.update();
   translate(-width/2, -height/2);
   input.update();
-  text(frameRate, 150, 150);
+  if(debugMode)text(frameRate, 150, 150);
 }

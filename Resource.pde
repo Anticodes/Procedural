@@ -2,7 +2,7 @@ class Mineral extends Resource{
   
   Mineral(PVector pos){
     this.pos = pos;
-    colour = colors[rndInt(0, 4)];
+    colour = mineralColors[rndInt(0, mineralColors.length)];
   }
   
   void render(){
@@ -15,7 +15,7 @@ class Plant extends Resource{
   
   Plant(PVector pos){
     this.pos = pos;
-    colour = colors[rndInt(0, 4)];
+    colour = plantColors[rndInt(0, plantColors.length)];
   }
   
   void render(){

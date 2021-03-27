@@ -47,6 +47,7 @@ class World{
   }
   
   void render(){
+    background(32, 128, 32);
     for(Chunk chunk : chunks.values()){
       chunk.render();
     }

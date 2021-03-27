@@ -20,9 +20,9 @@ class Input{
   }
   
   void update(){
-    joypad.render();
+    joypad.update();
     for(Button button : buttons)
-      button.render();
+      button.update();
   }
   
   void mPress(){
@@ -54,10 +54,9 @@ class Input{
     float radius;
     PVector pos;
     PVector joypos;
-    PVector[] touches = new PVector[1];
     boolean joying = false;
     boolean isActive = true;
-    int touchIndex = 0;
+    int touchId;
     
     public Joypad(PVector pos, float radius){
       this.pos = pos;
@@ -65,42 +64,63 @@ class Input{
       joypos = new PVector(0, 0);
     }
     
-    void render(){
+    void update(){
       if(!isActive)return;
+      if(indexOfId(touchId) == -1){
+        relM();
+      }
+      render();
+    }
+    
+    void render(){
       fill(255, 128);
       ellipse(pos.x*scale, pos.y*scale, radius*2, radius*2);
       ellipse(pos.x*scale+joypos.x, pos.y*scale+joypos.y, radius, radius);
+      text(touches.length, 140, 140);
     }
     
     void mPress(){
-      if(!isActive)return;
+      if(!isActive || joying)return;
       for(int i = 0; i < touches.length; i++)
         if(dist(pos.x*scale, pos.y*scale, touches[i].x, touches[i].y) < radius){
           joying = true;
-          joypos.x = mouseX - pos.x*scale;
-          joypos.y = mouseY - pos.y*scale;
-          joypos.limit(radius);
-          touchIndex = i;
+          moveJoy(i);
+          touchId = touches[i].id;
           break;
         }
     }
     
     void mDrag(){
       if(!isActive)return;
-      if (joying) {
-        joypos.x = touches[touchIndex].x - pos.x*scale;
-        joypos.y = touches[touchIndex].y - pos.y*scale;
-        joypos.limit(radius);
+      if (joying){
+        int index = indexOfId(touchId);
+        if(index == -1){
+          relM();
+          return;
+        }
+        moveJoy(index);
       }
     }
     
     void mRel(){
       if(!isActive)return;
-      if(joying && dist(pos.x*scale, pos.y*scale, mouseX, mouseY) < radius){
-        joying = false;
-        joypos.x = 0;
-        joypos.y = 0;
+      if(joying){
+        if(indexOfId(touchId) == -1){
+          relM();
+        }
       }
+    }
+    
+    void moveJoy(int index){
+      joypos.x = touches[index].x - pos.x*scale;
+      joypos.y = touches[index].y - pos.y*scale;
+      joypos.limit(radius);
+    }
+    
+    void relM(){
+      joying = false;
+      joypos.x = 0;
+      joypos.y = 0;
     }
     
     PVector getDir(){
@@ -113,7 +133,7 @@ class Input{
     PVector pos;
     boolean isActive = true;
     boolean pressing = false;
-    PVector[] touches = new PVector[1];
+    int touchId;
     String text;
     
     Button(PVector pos, float radius, String text){
@@ -128,8 +148,15 @@ class Input{
       this.text = "";
     }
     
-    void render(){
+    void update(){
       if(!isActive)return;
+      if(indexOfId(touchId) == -1){
+        relM();
+      }
+      render();
+    }
+    
+    void render(){
       fill(255, 128);
       ellipse(pos.x*scale, pos.y*scale, radius*(pressing?1.2:1), radius*(pressing?1.2:1));
       text(text, pos.x*scale, pos.y*scale);
@@ -140,17 +167,26 @@ class Input{
     }
     
     void mPress(){
-      if(!isActive)return;
-      for(int i = 0; i < touches.length; i++)
-        if(dist(pos.x*scale, pos.y*scale, touches[i].x, touches[i].y) < radius)
+      if(!isActive || pressing)return;
+      for(int i = 0; i < touches.length; i++){
+        if(dist(pos.x*scale, pos.y*scale, touches[i].x, touches[i].y) < radius){
           pressing = true;
+          touchId = touches[i].id;
+          return;
+        }
+      }
     }
     
     void mRel(){
       if(!isActive)return;
-      for(int i = 0; i < touches.length; i++)
-        if(dist(pos.x*scale, pos.y*scale, touches[i].x, touches[i].y) < radius)
-          pressing = false;
+      if(indexOfId(touchId) == -1){
+        relM();
+        return;
+      }
+    }
+    
+    void relM(){
+      pressing = false;
     }
   }
 }
@@ -165,6 +201,18 @@ void touchMoved(){
   
 void touchEnded(){
   input.mRel();
+}
+
+void mousePressed(){
+  touchStarted();
+}
+
+void mouseDragged(){
+  touchMoved();
+}
+
+void mouseReleased(){
+  touchEnded();
 }
   
 void keyPressed(){
