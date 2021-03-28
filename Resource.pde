@@ -29,4 +29,12 @@ class Resource{
   PVector pos;
   color colour;
   void render(){}
+  
+  PVector getPos(){
+    return pos.copy();
+  }
+  
+  void shine(){
+    colour = color(255, 255, 64);
+  }
 }

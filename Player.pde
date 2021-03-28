@@ -1,15 +1,28 @@
 class Player{
   PVector pos;
   float speed;
+  float reach;
   
   Player(){
     pos = new PVector(0, 0);
     speed = 0.0001;
+    reach = 5;
   }
   
   void update(){
     move();
+    gather();
     render();
+  }
+  
+  void gather(){
+    if(!input.gatherPressed())return;
+    ArrayList<Resource> resources = world.getChunkFromPos(getPos()).getResources();
+    for(Resource res : resources){
+      if(PVector.dist(getPos(), res.getPos()) < reach){
+        res.shine();
+      }
+    }
   }
   
   void move(){

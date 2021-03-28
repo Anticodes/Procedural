@@ -49,6 +49,10 @@ class Input{
     
   }
   
+  boolean gatherPressed(){
+    return buttons.get(0).isPressing();
+  }
+  
   private class Joypad{
     
     float radius;
@@ -74,7 +78,7 @@ class Input{
     
     void render(){
       fill(255, 128);
-      ellipse(pos.x*scale, pos.y*scale, radius*2, radius*2);
+      ellipse(pos.x*scale, pos.y*scale, getRadius(), getRadius());
       ellipse(pos.x*scale+joypos.x, pos.y*scale+joypos.y, radius, radius);
       text(touches.length, 140, 140);
     }

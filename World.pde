@@ -41,6 +41,12 @@ class World{
     lastSeen = copyHashMap(chunks);
   }
   
+  Chunk getChunkFromPos(PVector pos){
+    PVector chunkPos = pos.div(chunkSize);
+    chunkPos.set(floor(chunkPos.x), floor(chunkPos.y));
+    return chunks.get(chunkPos);
+  }
+  
   void update(){
     checkChunks(view.getPos());
     render();
@@ -90,6 +96,10 @@ class World{
       for(Resource res : resources){
         res.render();
       }
+    }
+    
+    ArrayList<Resource> getResources(){
+      return resources;
     }
   
     PVector getPos(){
