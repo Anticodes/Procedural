@@ -112,9 +112,13 @@ class Input{
     }
     
     void moveJoy(int index){
-      joypos.x = touches[index].x - pos.x*scale;
-      joypos.y = touches[index].y - pos.y*scale;
-      joypos.limit(radius);
+      moveJoy(touches[index].x - pos.x*scale, touches[index].y - pos.y*scale);
+      joypos.setMag(radius);
+    }
+
+    void moveJoy(float x, float y){
+      joypos.set(x, y);
+      joypos.setMag(radius);
     }
     
     void relM(){
@@ -201,24 +205,4 @@ void touchMoved(){
   
 void touchEnded(){
   input.mRel();
-}
-
-void mousePressed(){
-  touchStarted();
-}
-
-void mouseDragged(){
-  touchMoved();
-}
-
-void mouseReleased(){
-  touchEnded();
-}
-  
-void keyPressed(){
-    
-}
-  
-void keyReleased(){
-    
 }
