@@ -112,13 +112,8 @@ class Input{
     }
     
     void moveJoy(int index){
-      moveJoy(touches[index].x - pos.x*scale, touches[index].y - pos.y*scale);
-      joypos.setMag(radius);
-    }
-
-    void moveJoy(float x, float y){
-      joypos.set(x, y);
-      joypos.setMag(radius);
+      joypos.set(touches[index].x - pos.x*scale, touches[index].y - pos.y*scale);
+      joypos.limit(radius);
     }
     
     void relM(){
@@ -129,6 +124,14 @@ class Input{
     
     PVector getDir(){
       return joypos.copy();
+    }
+
+    PVector getPos(){
+      return pos.copy();
+    }
+
+    float getRadius(){
+      return radius * 2;
     }
   }
   
