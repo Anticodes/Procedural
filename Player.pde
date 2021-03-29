@@ -16,7 +16,7 @@ class Player{
   }
   
   void gather(){
-    if(!input.gatherPressed())return;
+    if(!input.isPressed(GATHER))return;
     ArrayList<Resource> resources = world.getChunkFromPos(getPos()).getResources();
     for(Resource res : resources){
       if(PVector.dist(getPos(), res.getPos()) < reach){

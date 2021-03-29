@@ -49,8 +49,8 @@ class Input{
     
   }
   
-  boolean gatherPressed(){
-    return buttons.get(0).isPressing();
+  boolean isPressed(int button){
+    return buttons.get(button).isPressing();
   }
   
   private class Joypad{
