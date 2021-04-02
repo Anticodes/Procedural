@@ -20,7 +20,7 @@ class Player{
     ArrayList<Resource> resources = world.getChunkFromPos(getPos()).getResources();
     for(Resource res : resources){
       if(PVector.dist(getPos(), res.getPos()) < reach){
-        res.shine();
+        res.gather();
       }
     }
   }
