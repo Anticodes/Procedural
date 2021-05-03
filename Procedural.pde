@@ -27,6 +27,7 @@ void setup(){
   world = new World(player);
   input.setJoypad(new PVector(4, resy - 4), 3*scale);
   input.addButton(new PVector(resx - 4, resy - 4), 3*scale, "Mine");
+  initResourceData();
 }
 
 void draw(){
